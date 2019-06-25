@@ -1,0 +1,11 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: https://gateway.helm-notifier.com
+functions:
+  repos:
+    lang: node10-express
+    handler: ./repos
+    image: phumberdroz/helm-notifier-repos:latest
+    secrets:
+      - database-uri
