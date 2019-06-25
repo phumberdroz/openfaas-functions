@@ -4,8 +4,8 @@ provider:
   gateway: https://gateway.helm-notifier.com
 functions:
   repos:
-    lang: node10-express
+    lang: node10-express-service
     handler: ./repos
-    image: phumberdroz/helm-notifier-repos:latest
+    image: phumberdroz/helm-notifier-repos
     secrets:
       - database-uri

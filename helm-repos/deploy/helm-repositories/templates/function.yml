@@ -1,0 +1,21 @@
+apiVersion: openfaas.com/v1alpha2
+kind: Function
+metadata:
+  name: helm-repositories
+  namespace: openfaas-fn
+spec:
+  annotations: {}
+  constraints: null
+  environment: {}
+  handler: node index.js
+  image: phumberdroz/helm-notifier-repositories:{{ .Values.image.tag }}
+  labels: {}
+  limits: null
+  name: repos
+  readOnlyRootFilesystem: false
+  replicas: 1
+  requests: null
+  secrets:
+  - database-uri
+status:
+  availableReplicas: 0
