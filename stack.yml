@@ -5,7 +5,7 @@ provider:
 functions:
   repos:
     lang: node10-express-service
-    handler: ./repos
+    handler: ./helm-repos
     image: phumberdroz/helm-notifier-repos
     secrets:
       - database-uri
