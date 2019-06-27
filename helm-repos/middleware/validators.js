@@ -7,7 +7,11 @@ const helmRepoSchema = yup.object().shape({
 
 
 async function helmRepoRequestValidator(req, res, next) {
-  await helmRepoSchema.validate(req);
+  try {
+    await helmRepoSchema.validate(req);
+  } catch (error) {
+    throw error
+  }
   next();
 }
 
