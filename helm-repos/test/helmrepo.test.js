@@ -16,9 +16,10 @@ describe('helm repo', () => {
 
   before(async () => {
     app = await init();
+    await knex.raw('truncate table helm_repos');
   });
 
-  describe('POST / helm-repo', () => {
+  describe('POST /', () => {
     it('returns 201 and helm-repo is created', async () => {
       const name = faker.random.word();
       const url = faker.internet.url();
@@ -77,18 +78,18 @@ describe('helm repo', () => {
         });
     });
   });
-  // describe('GET helm-repo', () => {
-  //   it('can get an repo that already exists from the database', async () => {
-  //     const { name: repoName } = await knex('helm_repos').select().first();
-  //     request(app)
-  //       .get(`/${repoName}`)
-  //       .expect(213)
-  //       .then((response) => {
-  //         expect(response.body.name).to.equal(repoName);
-  //       });
-  //   });
-  // });
-  describe('GET / helm-repo', () => {
+  describe('GET /', () => {
+    it('returns 200 and list of repos', async () => {
+      const repos = await knex('helm_repos').select();
+      await request(app)
+        .get('/')
+        .expect(200)
+        .then((response) => {
+          expect(response.body.length).to.equal(repos.length);
+        });
+    });
+  });
+  describe('GET /:repoName', () => {
     it('returns 200', async () => {
       const { name: repoName } = await knex('helm_repos').select().first();
       await request(app)

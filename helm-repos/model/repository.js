@@ -26,13 +26,15 @@ async function get(repoName) {
   }
   return dbObj;
 }
-// const update = function (id, payload) {
-//   return knex('helm_repos').select().where({ id, tenant }).first()
-//     .then(mapDeviceWithAliases);
-// };
+
+async function list() {
+  const arr = await knex('helm_repos')
+    .select();
+  return arr;
+}
 
 module.exports = {
   get,
   create,
-  // update,
+  list,
 };
