@@ -12,8 +12,6 @@ async function init() {
   return app;
 }
 
-init();
-
 module.exports = {
   init,
 };

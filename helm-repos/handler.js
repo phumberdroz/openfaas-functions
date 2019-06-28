@@ -17,7 +17,7 @@ process.on('unhandledRejection', (err) => {
 module.exports = async (config) => {
   const { app } = config;
   await knex.migrate.latest();
-
+  console.log('request')
   app.use(bodyParser.json());
   app.post('/', validators.helmRepoRequestValidator, (req, res, next) => {
     repoModel.create(req).then((obj) => {
