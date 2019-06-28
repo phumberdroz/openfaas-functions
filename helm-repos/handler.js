@@ -5,6 +5,14 @@ const validators = require('./middleware/validators');
 const { errorHandler } = require('./middleware/errorHandler');
 const repoModel = require('./model/repository');
 
+process.on('uncaughtException', (err) => {
+  console.error(err, `uncaughtException ${err}`);
+  process.exit(1);
+});
+process.on('unhandledRejection', (err) => {
+  console.error('unhandledRejection', err);
+  process.exit(1);
+});
 
 module.exports = async (config) => {
   const { app } = config;
