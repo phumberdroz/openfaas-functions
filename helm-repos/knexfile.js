@@ -7,8 +7,8 @@ let url = process.env.DATABASE_URI;
 
 if (!process.env.DATABASE_URI) {
   pg.defaults.ssl = true;
-  seedsDir = './functions/db/seeds';
-  migrationsDir = './functions/db/seeds';
+  seedsDir = './function/db/seeds';
+  migrationsDir = './function/db/seeds';
   [url] = fs.readFileSync('/var/openfaas/secrets/database-uri', 'utf8').split('?');
 }
 
