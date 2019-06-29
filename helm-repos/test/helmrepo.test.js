@@ -15,7 +15,7 @@ describe('helm repo', () => {
   let app;
 
   before(async () => {
-    await knex.raw('truncate table helm_repos knex_migrations knex_migrations_lock cascade');
+    await knex.raw('DROP SCHEMA public CASCADE; CREATE SCHEMA public;');
     app = await init();
   });
 
@@ -89,24 +89,33 @@ describe('helm repo', () => {
         });
     });
   });
-  describe('GET /:repoName', () => {
-    it('returns 200', async () => {
-      const { name: repoName } = await knex('helm_repos').select().first();
+  describe('GET /:repoId', () => {
+    it('returns 200 when looking up via repoId', async () => {
+      const { id: repoId } = await knex('helm_repos').select().first();
       await request(app)
-        .get(`/${repoName}`)
+        .get(`/${repoId}`)
         .expect(200)
         .then((response) => {
-          expect(response.body.name).to.equal(repoName);
+          expect(response.body.id).to.equal(repoId);
           expect(response.body.id).to.match(uuidv4Regex);
         });
     });
-    it('returns 404 if note found', async () => {
+    it('returns 404 if a non uuid is provided', async () => {
       await request(app)
         .get('/UNKNOWREPO1234')
         .expect(404)
         .then((response) => {
           expect(response.body.errorCode).to.equal('HelmRepoNotFound');
-          expect(response.body.errorMessage).to.equal('Helm reposistory UNKNOWREPO1234 not found');
+          expect(response.body.errorMessage).to.equal('Helm reposistory UNKNOWREPO1234 not found. You need to provide an uuidv4.');
+        });
+    });
+    it('returns 404 if not found', async () => {
+      await request(app)
+        .get('/d527ee03-5ff7-4bb2-9e3e-2d2159e491e7')
+        .expect(404)
+        .then((response) => {
+          expect(response.body.errorCode).to.equal('HelmRepoNotFound');
+          expect(response.body.errorMessage).to.equal('Helm reposistory d527ee03-5ff7-4bb2-9e3e-2d2159e491e7 not found');
         });
     });
   });

@@ -30,8 +30,8 @@ module.exports = async (config) => {
       res.json(obj);
     }).catch(next);
   });
-  app.get('/:repoName', (req, res, next) => {
-    repoModel.get(req.params.repoName).then((obj) => {
+  app.get('/:repoId', validators.repoIdRequestParamValidator, (req, res, next) => {
+    repoModel.get(req.params.repoId).then((obj) => {
       res.status(200);
       res.json(obj);
     }).catch(next);

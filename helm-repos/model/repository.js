@@ -16,13 +16,16 @@ async function create(payload) {
     });
   return dbObj[0];
 }
-async function get(repoName) {
+async function get(repoId) {
   const dbObj = await knex('helm_repos')
     .select()
-    .where({ name: repoName })
-    .first();
+    .where({ id: repoId })
+    .first()
+    .catch((err) => {
+      console.log(err)
+    });
   if (dbObj === undefined) {
-    throw new errors.HelmRepoNotFound(`Helm reposistory ${repoName} not found`);
+    throw new errors.HelmRepoNotFound(`Helm reposistory ${repoId} not found`);
   }
   return dbObj;
 }
