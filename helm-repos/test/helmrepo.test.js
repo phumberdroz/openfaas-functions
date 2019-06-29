@@ -15,8 +15,8 @@ describe('helm repo', () => {
   let app;
 
   before(async () => {
+    await knex.raw('truncate table helm_repos knex_migrations knex_migrations_lock cascade');
     app = await init();
-    await knex.raw('truncate table helm_repos');
   });
 
   describe('POST /', () => {
