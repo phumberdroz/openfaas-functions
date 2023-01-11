@@ -13,7 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "knex": "^0.17.6",
+    "knex": "^2.4.0",
     "pg": "^7.11.0",
     "yup": "^0.27.0"
   },
